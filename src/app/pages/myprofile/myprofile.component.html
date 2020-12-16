@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input formControlName="email" class="form-control">
+      <input formControlName="email" class="form-control" [ngClass]="profileForm.get('email').invalid ? 'is-invalid' : ''" >
     </div>
 
     <div *ngIf="!profileForm.get('first_name').valid && profileForm.get('first_name').touched" class="alert alert-danger" >

@@ -1,3 +1,4 @@
+import { GlobalService } from '../../services/global.service';
 import { Component, OnInit } from '@angular/core';
 import {Login} from './login-model';
 
@@ -14,14 +15,26 @@ export class HomeComponent implements OnInit {
     password: ''
   };
 
-  constructor() { }
+  constructor(private service: GlobalService) { }
 
   ngOnInit(): void {
-    console.log('old value', this.logins)
+    // console.log('old value', this.logins)
+
+
   }
 
   onLogin():void {
-    console.log('new value', this.logins)
+    this.service.httpLogin(this.logins);
+    this.service.onHttpLogin.subscribe(
+      (response: any) => {
+        const token = response.token;
+        this.service.setToken(token);
+        console.log('token from service',this.service.getToken());
+      }
+    );
+
+
+    // console.log('new value', this.logins)
   }
 
 }
