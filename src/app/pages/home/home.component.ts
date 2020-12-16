@@ -9,22 +9,31 @@ import {Login} from './login-model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  isLogged: boolean;
 
   logins: Login = {
     username: '',
     password: ''
   };
 
-  constructor(private service: GlobalService) { }
-
-  ngOnInit(): void {
-    // console.log('old value', this.logins)
-
-
+  constructor(private service: GlobalService) {
+    this.isLogged = false;
   }
 
-  onLogin():void {
+  ngOnInit(): void {
+    this.service.isLogged.subscribe(
+      (logged: any) => {
+        console.log('isLogged', logged);
+        this.isLogged = logged;
+      }
+    );
+
+    this.service.checkLogStatus();
+  }
+
+  onLogin(): void {
     this.service.httpLogin(this.logins);
+
     this.service.onHttpLogin.subscribe(
       (response: any) => {
         const token = response.token;
@@ -32,9 +41,9 @@ export class HomeComponent implements OnInit {
         console.log('token from service',this.service.getToken());
       }
     );
-
-
-    // console.log('new value', this.logins)
   }
 
+  onLogout(): void {
+    this.service.deleteToken();
+  }
 }
