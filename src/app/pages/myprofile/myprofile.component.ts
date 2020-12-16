@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
 import { Profile } from './profile-model';
 
@@ -9,10 +11,14 @@ import { Profile } from './profile-model';
   styleUrls: ['./myprofile.component.scss']
 })
 export class MyprofileComponent implements OnInit {
+  subscriptionOnHttpGetProfile = new Subscription();
+  profileForm: any;
+  isLogged: any;
 
-  profileForm: any ;
-
-  constructor(private _globalService: GlobalService) { }
+  constructor(
+    private _globalService: GlobalService,
+    private router: Router
+  ) { }
 
   profile: Profile = {
     email: '',
@@ -33,6 +39,14 @@ export class MyprofileComponent implements OnInit {
         this.fillForm(profile);
       }
     );
+
+    this._globalService.isLogged.subscribe(
+      (logged: any) => {
+        this.isLogged = logged;
+      }
+    );
+
+    this._globalService.checkLogStatus();
 
     this.profileForm = new FormGroup({
       email: new FormControl('',[Validators.required, Validators.email ]),
@@ -77,5 +91,10 @@ export class MyprofileComponent implements OnInit {
     } else {
       alert('Invalid Form!')
     }
+  }
+
+  onLogout(): void {
+    this._globalService.deleteToken();
+    this.router.navigate(['home', {}]);
   }
 }

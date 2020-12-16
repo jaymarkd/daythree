@@ -10,6 +10,7 @@ import { MyprofileComponent } from './pages/myprofile/myprofile.component';
 import { NavComponent } from './nav/nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { GroupsComponent } from './pages/groups/groups.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     MyprofileComponent,
     NavComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,

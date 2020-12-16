@@ -1,6 +1,7 @@
 import { GlobalService } from '../../services/global.service';
 import { Component, OnInit } from '@angular/core';
 import {Login} from './login-model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
     password: ''
   };
 
-  constructor(private service: GlobalService) {
+  constructor(private service: GlobalService, private router: Router) {
     this.isLogged = false;
   }
 
@@ -38,12 +39,9 @@ export class HomeComponent implements OnInit {
       (response: any) => {
         const token = response.token;
         this.service.setToken(token);
-        console.log('token from service',this.service.getToken());
+
+        this.router.navigate(['my-profile', {}]);
       }
     );
-  }
-
-  onLogout(): void {
-    this.service.deleteToken();
   }
 }

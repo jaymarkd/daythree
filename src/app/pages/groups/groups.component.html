@@ -1,0 +1,20 @@
+<!--
+<form [formGroup]="groupsForm">
+  <div class="form-group">
+    <label>Groups</label>
+    <input formControlName="groups" class="form-control">
+  </div>
+</form> -->
+<div class="row">
+  <div class="col">
+    <h2 class="pt-2">GROUPS: </h2>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let group of groups">{{group.name}}</li>
+    </ul>
+    <hr>
+    <h2>CLIENTS: </h2>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let client of clients">{{client.name}}</li>
+    </ul>
+  </div>
+</div>
